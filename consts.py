@@ -51,9 +51,13 @@ NUM_OF_GRASS = 20
 # img paths
 GRASS_IMG_PATH = r"images/grass.png"
 MINE_IMG_PATH = R"images/mine.png"
+SOLIDER_IMG_PATH = r"images/soldier.png"
+NIGHT_SOLIDER_IMG_PATH = r"images/soldier_night.png"
 # xrays
 XRAY_LINE_WIDTH = 1
 XRAY_LINE_COLOR = GREEN
 
 # GAME STATES
-RUNNING_STATE = 1
+RUNNING_STATE = 0
+LOSE_STATE = -1
+WIN_STATE = 1

@@ -13,7 +13,10 @@ create_body()
 
 def get_leg_location():
     global soldier_legs
-    return tuple([soldier_legs[0] , soldier_legs[1] , soldier_legs[2]])
+    return soldier_legs[0] , soldier_legs[1] , soldier_legs[2]
+
+def get_body_locations() -> list[tuple[int, int]]:
+    return soldier_body
 
 def move_up():
     global soldier_legs

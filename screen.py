@@ -2,6 +2,7 @@ import random
 import pygame
 import consts
 import game_field
+import soldier
 
 
 screen = pygame.display.set_mode(
@@ -10,6 +11,8 @@ screen = pygame.display.set_mode(
 grass_locations: tuple[tuple[int, int]]
 grass_image: pygame.Surface
 mine_image: pygame.Surface
+solider_image: pygame.Surface
+night_solider_image: pygame.Surface
 
 
 def init_grass_locations() -> None:
@@ -19,19 +22,30 @@ def init_grass_locations() -> None:
 
 
 def init_images() -> None:
+
+    # grass image
     global grass_image
     grass_image_size = ((consts.MINE_COLS * consts.CELL_SIZE),
                         consts.CELL_SIZE)  # grass image size to fit like mine (3 cols, 1 row)
     original_grass_image = pygame.image.load(consts.GRASS_IMG_PATH).convert_alpha()
     grass_image = pygame.transform.scale(original_grass_image, grass_image_size)
 
+    # mine image
     global mine_image
     mine_image_size = ((consts.MINE_COLS * consts.CELL_SIZE),
                         consts.CELL_SIZE)  # grass image size to fit (3 cols, 1 row)
     original_mine_image =  pygame.image.load(consts.MINE_IMG_PATH).convert_alpha()
     mine_image = pygame.transform.scale(original_mine_image, mine_image_size)
 
+    # soldiers images
+    global solider_image
+    soldiers_image_size = ((consts.SOLDIER_COLS * consts.CELL_SIZE), (consts.SOLDIER_ROWS * consts.CELL_SIZE))
+    original_solider_image = pygame.image.load(consts.SOLIDER_IMG_PATH).convert_alpha()
+    solider_image = pygame.transform.scale(original_solider_image, soldiers_image_size)
 
+    global night_solider_image
+    original_night_solider_image = pygame.image.load(consts.NIGHT_SOLIDER_IMG_PATH).convert_alpha()
+    night_solider_image = pygame.transform.scale(original_night_solider_image, soldiers_image_size)
 
 
 
@@ -66,9 +80,11 @@ def draw_background(is_xray: bool) -> None:
         screen.fill(consts.BACKGROUND_COLOR)
 
 
-def draw_soldier() -> None:
-    # TODO draw soldier
-    ...
+def draw_soldier(is_xray: bool) -> None:
+    solider_top_matrix, solider_left_matrix = soldier.get_body_locations()[0]
+    used_solider_image = solider_image if not is_xray else night_solider_image
+    solider_x_screen, solider_y_screen =  solider_left_matrix * consts.CELL_SIZE, solider_top_matrix * consts.CELL_SIZE
+    screen.blit(used_solider_image, (solider_x_screen, solider_y_screen))
 
 
 def draw_grass() -> None:
@@ -94,5 +110,7 @@ def draw_game(game_state) -> None:
         draw_mines()
     else:
         draw_grass()
+
+    draw_soldier(game_state["is_xray"])
 
     pygame.display.update()
