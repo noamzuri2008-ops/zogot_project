@@ -39,8 +39,6 @@ MINE_ROWS = 1
 MINE_COLS = 3
 MINE = 1
 
-
-
 # COLORS
 GREEN = (0, 163, 7)
 BLACK = (0, 0, 0)
