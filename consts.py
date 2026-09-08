@@ -39,8 +39,6 @@ MINE_ROWS = 1
 MINE_COLS = 3
 MINE = 1
 
-
-
 # COLORS
 GREEN = (0, 163, 7)
 BLACK = (0, 0, 0)
@@ -56,3 +54,6 @@ MINE_IMG_PATH = R"images/mine.png"
 # xrays
 XRAY_LINE_WIDTH = 1
 XRAY_LINE_COLOR = GREEN
+
+# GAME STATES
+RUNNING_STATE = 1
