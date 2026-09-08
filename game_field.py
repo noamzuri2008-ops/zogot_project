@@ -1,5 +1,6 @@
 import consts
 import random
+import soldier
 
 field = []
 mine_matrix_locations = []
@@ -7,12 +8,12 @@ flag_locations = []
 
 def create_field():
     global field
-    help = []
+    help1 = []
     for row in range(consts.BOARD_ROWS):
         for col in range(consts.BOARD_COLS):
-            help.append(consts.EMPTY_TILE)
-        field.append(help)
-        help = []
+            help1.append(consts.EMPTY_TILE)
+        field.append(help1)
+        help1 = []
 
 def create_mines():
     mine_count = 0
@@ -25,11 +26,6 @@ def create_mines():
             add_mine_locations_to_list(random_row, random_col)
             mine_count += 1
     return field
-
-def create_solider():
-    for row in range(consts.SOLDIER_ROWS):
-        for col in range(consts.SOLDIER_COLS):
-            field[row][col] = consts.SOLDIER
 
 def check_availability(row: int, col: int) -> bool:
     return not_flag_solider(row , col) and field[row][col] == field[row][col + 1] == field[row][col + 2] == consts.EMPTY_TILE
@@ -65,6 +61,30 @@ def create_flag():
             field[row][col] = consts.FLAG
             flag_locations.append(tuple([row,col]))
 
+def remove_solider():
+    for row in range(len(field)):
+        for col in range(field[row]):
+            if field[row][col] == consts.SOLDIER:
+                field[row][col] = consts.EMPTY_TILE
+
+def update_solider():
+    field[soldier.soldier_legs[0]][soldier.soldier_legs[1]] = consts.SOLDIER
+    field[soldier.soldier_legs[0]][soldier.soldier_legs[2]] = consts.SOLDIER
+    for item in soldier.soldier_body:
+        field[item[0]][item[1]] = consts.SOLDIER
+
+def check_soldier_mine():
+    for mine in mine_matrix_locations:
+        if mine[0] == soldier.soldier_legs[0] and (mine[1] == soldier.soldier_legs[1] or mine[1] == soldier.soldier_legs[2]):
+            return True
+    return False
+
+def check_soldier_flag():
+    for flag in flag_locations:
+        for bodypart in soldier.soldier_body:
+            if flag[0] == bodypart[0] and flag[1] == bodypart[1]:
+                return True
+    return False
 
 if __name__ == '__main__':
     create_field()
