@@ -31,11 +31,9 @@ def create_mines():
 
 
 def check_availability(row: int, col: int) -> bool:
-    return not_flag_solider(row, col) and field[row][col] == field[row][col + 1] == field[row][
-        col + 2] == consts.EMPTY_TILE
+    return not_flag_soldier(row, col) and field[row][col] == field[row][col + 1] == field[row][col + 2] == consts.EMPTY_TILE
 
-
-def not_flag_solider(row1, col1):
+def not_flag_soldier(row1, col1):
     # solider location
     for row in range(consts.SOLDIER_ROWS):
         for col in range(consts.SOLDIER_COLS):
@@ -67,10 +65,9 @@ def create_flag():
     for row in range(-consts.FLAG_HEIGHT, 0):
         for col in range(-consts.FLAG_WIDTH, 0):
             field[row][col] = consts.FLAG
-            flag_locations.append(tuple([row, col]))
+            flag_locations.append((row, col))
 
-
-def remove_solider():
+def remove_soldier():
     for row in range(len(field)):
         for col in range(len(field[row])):
             if field[row][col] == consts.SOLDIER:
@@ -99,8 +96,7 @@ def check_soldier_flag():
                 return True
     return False
 
-
 if __name__ == '__main__':
     create_field()
     create_mines()
-    [print(row) for row in field]
+    create_flag()
