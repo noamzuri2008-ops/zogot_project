@@ -57,7 +57,5 @@ def handle_user_events() -> None:
             elif event.key == pygame.K_LEFT:
                 soldier.move_left()
 
-
-
 if __name__ == '__main__':
     main()

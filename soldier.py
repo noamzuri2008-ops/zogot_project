@@ -13,7 +13,7 @@ def create_body():
     global soldier_body
     for row in range(consts.SOLDIER_BODY_ROWS):
         for col in range(consts.SOLDIER_COLS):
-            soldier_body.append((row,col))
+            soldier_body.append([row,col])
 
 create_body()
 
@@ -53,6 +53,7 @@ def move_up():
         for item in soldier_body:
             item[0] += 1
 
+
 def move_down():
     if check_down():
         global soldier_legs
@@ -68,6 +69,7 @@ def move_left():
         for item in soldier_body:
             item[0]  -= 1
 
+
 def move_right():
     if check_right():
         global soldier_legs
@@ -75,3 +77,5 @@ def move_right():
         soldier_legs[2] += 1
         for item in soldier_body:
             item[0] += 1
+
+            [print(row) for row in game_field.field]
