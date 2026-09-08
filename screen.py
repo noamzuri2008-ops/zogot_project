@@ -1,15 +1,18 @@
 import random
 import pygame
 import consts
+import game_field
+
 
 screen = pygame.display.set_mode(
     (consts.WINDOW_WIDTH, consts.WINDOW_HEIGHT))
 
 grass_locations: tuple[tuple[int, int]]
 grass_image: pygame.Surface
+mine_image: pygame.Surface
 
 
-def init_grass() -> None:
+def init_grass_locations() -> None:
     global grass_locations
     end_grass_location = consts.WINDOW_WIDTH - (consts.MINE_COLS * consts.CELL_SIZE)
     grass_locations = tuple(((random.randint(0, end_grass_location), random.randint(0, consts.WINDOW_HEIGHT)) for _ in range(consts.NUM_OF_GRASS)))
@@ -18,13 +21,23 @@ def init_grass() -> None:
 def init_images() -> None:
     global grass_image
     grass_image_size = ((consts.MINE_COLS * consts.CELL_SIZE),
-                        consts.CELL_SIZE)  # grass image size to fit (3 cols, 1 row)
+                        consts.CELL_SIZE)  # grass image size to fit like mine (3 cols, 1 row)
     original_grass_image = pygame.image.load(consts.GRASS_IMG_PATH).convert_alpha()
     grass_image = pygame.transform.scale(original_grass_image, grass_image_size)
 
+    global mine_image
+    mine_image_size = ((consts.MINE_COLS * consts.CELL_SIZE),
+                        consts.CELL_SIZE)  # grass image size to fit (3 cols, 1 row)
+    original_mine_image =  pygame.image.load(consts.MINE_IMG_PATH).convert_alpha()
+    mine_image = pygame.transform.scale(original_mine_image, mine_image_size)
+
+
+
+
+
 
 def init_screen() -> None:
-    init_grass()
+    init_grass_locations()
     init_images()
     # add more screen inits in this to be run when starting game
 
@@ -59,8 +72,6 @@ def draw_soldier() -> None:
 
 
 def draw_grass() -> None:
-    global grass_image
-    global grass_locations
     for grass_x, grass_y in grass_locations:
         screen.blit(grass_image, (grass_x, grass_y))
 
@@ -70,16 +81,18 @@ def draw_flag() -> None:
     ...
 
 def draw_mines() -> None:
-    # TODO draw mines
-    ...
+    for mine_row, mine_col in game_field.mine_matrix_locations[::3]:
+        mine_x_screen, mine_y_screen = mine_col * consts.CELL_SIZE, mine_row * consts.CELL_SIZE
+        screen.blit(mine_image, (mine_x_screen, mine_y_screen))
+
 
 def draw_game(game_state) -> None:
     draw_background(game_state["is_xray"])
 
-    # xray state not having grass
-    if not game_state["is_xray"]:
-        draw_grass()
-    else:
+    # xray state - mines or grass
+    if game_state["is_xray"]:
         draw_mines()
+    else:
+        draw_grass()
 
     pygame.display.update()
