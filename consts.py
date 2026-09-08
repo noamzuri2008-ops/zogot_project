@@ -1,3 +1,4 @@
+import copy
 BOARD_ROWS = 25
 BOARD_COLS = 50
 CELL_SIZE = 20
@@ -12,6 +13,17 @@ SOLDIER_COLS = 2
 SOLDIER_BODY_ROWS = 3   # the upper part
 SOLDIER_FEET_ROWS = 1   # the lower part
 SOLDIER = 3
+
+SOLDIER_LEGS_ROW_START = 3
+SOLDIER_LEFT_LEG_COL_START = 0
+SOLIDER_BODY_COL_START = 0
+SOLDIER_BODY_ROW_START = 0
+
+soldier_legs_row = copy.copy(SOLDIER_LEGS_ROW_START)
+soldier_left_leg_col = copy.copy(SOLDIER_LEFT_LEG_COL_START)
+soldier_body_col_start = copy.copy(SOLIDER_BODY_COL_START)
+soldier_body_row_start = copy.copy(SOLDIER_BODY_ROW_START)
+
 
 # FLAG
 FLAG_HEIGHT = 3
