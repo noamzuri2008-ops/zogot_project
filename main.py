@@ -15,6 +15,7 @@ def main() -> None:
     set_game_state()
     game_field.create_field()
     game_field.create_mines()
+    game_field.create_flag()
 
 
     while state["is_running"]:
@@ -22,10 +23,10 @@ def main() -> None:
             state["is_xray"] = False
 
         handle_user_events()
-        # if game_field.check_solider_mine():
-        #     state["state"] = consts.LOSE_STATE
-        # if game_field.check_solider_flag():
-        #     state["state"] = consts.WIN_STATE
+        if game_field.check_soldier_mine():
+            state["state"] = consts.LOSE_STATE
+        if game_field.check_soldier_flag():
+            state["state"] = consts.WIN_STATE
 
         screen.draw_game(state)
 
@@ -53,7 +54,7 @@ def handle_user_events() -> None:
                 state["is_xray"] = True
                 state["xray_start_time"] = time.time()
 
-            # game_field.remove_solider()
+            game_field.remove_solider()
             if event.key == pygame.K_UP:
                 soldier.move_up()
             elif event.key == pygame.K_DOWN:
@@ -63,7 +64,7 @@ def handle_user_events() -> None:
             elif event.key == pygame.K_LEFT:
                 soldier.move_left()
 
-            # game_field.update_solider()
+            game_field.update_solider()
 
 
 

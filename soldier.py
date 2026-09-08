@@ -52,17 +52,17 @@ def move_up():
     if check_up():
         global soldier_legs
         global soldier_body
-        soldier_legs[0] += 1
+        soldier_legs[0] -= 1
         for item in soldier_body:
-            item[0] += 1
+            item[0] -= 1
 
 
 def move_down():
     if check_down():
         global soldier_legs
-        soldier_legs[0] -= 1
+        soldier_legs[0] += 1
         for item in soldier_body:
-            item[0] -= 1
+            item[0] += 1
 
 def move_left():
     if check_left():
@@ -70,7 +70,7 @@ def move_left():
         soldier_legs[1] -= 1
         soldier_legs[2] -= 1
         for item in soldier_body:
-            item[0]  -= 1
+            item[1]  -= 1
 
 
 def move_right():
@@ -79,6 +79,4 @@ def move_right():
         soldier_legs[1] += 1
         soldier_legs[2] += 1
         for item in soldier_body:
-            item[0] += 1
-
-            [print(row) for row in game_field.field]
+            item[1] += 1
