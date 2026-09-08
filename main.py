@@ -66,7 +66,7 @@ def handle_user_events() -> None:
             elif event.key == pygame.K_LEFT:
                 soldier.move_left()
 
-            game_field.update_soldier()
+            game_field.update_solider()
 
 
 
