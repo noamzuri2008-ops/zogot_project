@@ -28,6 +28,8 @@ def main() -> None:
         if game_field.check_soldier_flag():
             state["state"] = consts.WIN_STATE
 
+        print(state["state"])
+
         screen.draw_game(state)
 
 
@@ -54,7 +56,7 @@ def handle_user_events() -> None:
                 state["is_xray"] = True
                 state["xray_start_time"] = time.time()
 
-            game_field.remove_solider()
+            game_field.remove_soldier()
             if event.key == pygame.K_UP:
                 soldier.move_up()
             elif event.key == pygame.K_DOWN:
@@ -64,7 +66,7 @@ def handle_user_events() -> None:
             elif event.key == pygame.K_LEFT:
                 soldier.move_left()
 
-            game_field.update_solider()
+            game_field.update_soldier()
 
 
 

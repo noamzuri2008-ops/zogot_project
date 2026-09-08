@@ -4,7 +4,7 @@ import game_field
 soldier_legs = [consts.soldier_legs_row , consts.soldier_left_leg_col , consts.soldier_left_leg_col + 1]
 soldier_body = []
 
-def create_solider_start():
+def create_soldier_start():
     for row in range(consts.SOLDIER_ROWS):
         for col in range(consts.SOLDIER_COLS):
             game_field.field[row][col] = consts.SOLDIER
