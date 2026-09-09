@@ -13,6 +13,7 @@ grass_image: pygame.Surface
 mine_image: pygame.Surface
 solider_image: pygame.Surface
 night_solider_image: pygame.Surface
+flag_image: pygame.Surface
 
 
 def init_grass_locations() -> None:
@@ -22,7 +23,6 @@ def init_grass_locations() -> None:
 
 
 def init_images() -> None:
-
     # grass image
     global grass_image
     grass_image_size = ((consts.MINE_COLS * consts.CELL_SIZE),
@@ -47,6 +47,11 @@ def init_images() -> None:
     original_night_solider_image = pygame.image.load(consts.NIGHT_SOLIDER_IMG_PATH).convert_alpha()
     night_solider_image = pygame.transform.scale(original_night_solider_image, soldiers_image_size)
 
+    # flag image
+    global flag_image
+    flag_image_size = ((consts.FLAG_WIDTH * consts.CELL_SIZE), (consts.FLAG_HEIGHT * consts.CELL_SIZE))
+    original_flag_image = pygame.image.load(consts.FLAG_IMG_PATH)
+    flag_image = pygame.transform.scale(original_flag_image, flag_image_size)
 
 
 
@@ -93,8 +98,11 @@ def draw_grass() -> None:
 
 
 def draw_flag() -> None:
-    # TODO draw flag
-    ...
+    flag_matrix_relative_position_top, flag_matrix_relative_position_left = game_field.flag_locations[0]
+    flag_top_matrix, flag_left_matrix = consts.BOARD_ROWS + flag_matrix_relative_position_top, consts.BOARD_COLS + flag_matrix_relative_position_left
+    flag_screen_x, flag_screen_y = flag_left_matrix * consts.CELL_SIZE, flag_top_matrix * consts.CELL_SIZE
+    screen.blit(flag_image, (flag_screen_x, flag_screen_y))
+
 
 def draw_mines() -> None:
     for mine_row, mine_col in game_field.mine_matrix_locations[::3]:
@@ -111,6 +119,8 @@ def draw_game(game_state) -> None:
     else:
         draw_grass()
 
+    draw_flag()
     draw_soldier(game_state["is_xray"])
+
 
     pygame.display.update()

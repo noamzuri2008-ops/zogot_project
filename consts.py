@@ -53,6 +53,7 @@ GRASS_IMG_PATH = r"images/grass.png"
 MINE_IMG_PATH = R"images/mine.png"
 SOLIDER_IMG_PATH = r"images/soldier.png"
 NIGHT_SOLIDER_IMG_PATH = r"images/soldier_night.png"
+FLAG_IMG_PATH = r"images/flag.png"
 # xrays
 XRAY_LINE_WIDTH = 1
 XRAY_LINE_COLOR = GREEN

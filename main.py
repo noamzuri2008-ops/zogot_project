@@ -28,8 +28,6 @@ def main() -> None:
         if game_field.check_soldier_flag():
             state["state"] = consts.WIN_STATE
 
-        print(state["state"])
-
         screen.draw_game(state)
 
 
