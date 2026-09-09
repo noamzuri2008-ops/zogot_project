@@ -7,6 +7,7 @@ import soldier
 import consts
 import screen
 import game_field
+import save_games
 
 state: dict[str, Any] = dict()
 pygame_number_keys: list[int] = [
@@ -102,6 +103,13 @@ def handle_user_events() -> None:
                 soldier.move_left()
 
             game_field.update_solider()
+
+def load_game(key: int):
+    save_file_path: str = consts.SAVING_FILES_PATH.format(key=key)
+    data = save_games.pull_game(save_file_path)
+    soldier.update(data["soldier leg"] ,data["soldier body"])
+    game_field.update_mines(data["mines location"])
+    screen.update_grass_locations(data["grass location"])
 
 
 if __name__ == '__main__':

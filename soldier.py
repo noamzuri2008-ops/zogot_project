@@ -4,6 +4,10 @@ import game_field
 soldier_legs = [consts.soldier_legs_row , consts.soldier_left_leg_col , consts.soldier_left_leg_col + 1]
 soldier_body = []
 
+def update(new_soldier_legs, new_soldier_body):
+    soldier_legs.copy(new_soldier_legs)
+    new_soldier_body.copy(soldier_body)
+
 def create_soldier_start():
     for row in range(consts.SOLDIER_ROWS):
         for col in range(consts.SOLDIER_COLS):
