@@ -17,6 +17,7 @@ def main() -> None:
     game_field.create_mines()
     game_field.create_flag()
 
+    end_game_timeout: float | int = time.time()
 
     while state["is_running"]:
         if time.time() - state["xray_start_time"] > 1:
@@ -28,7 +29,10 @@ def main() -> None:
         if game_field.check_soldier_flag():
             state["state"] = consts.WIN_STATE
 
-        print(state["state"])
+        if state["state"] == consts.RUNNING_STATE:
+            end_game_timeout = time.time()
+        elif time.time() - end_game_timeout > consts.END_GAME_TIMEOUT:
+                break
 
         screen.draw_game(state)
 
@@ -41,6 +45,7 @@ def set_game_state() -> None:
         "is_xray": False,
         "xray_start_time": time.time(),
     }
+
 
 def handle_user_events() -> None:
     for event in pygame.event.get():
@@ -66,8 +71,7 @@ def handle_user_events() -> None:
             elif event.key == pygame.K_LEFT:
                 soldier.move_left()
 
-            game_field.update_soldier()
-
+            game_field.update_solider()
 
 
 if __name__ == '__main__':
