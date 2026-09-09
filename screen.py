@@ -13,7 +13,9 @@ grass_image: pygame.Surface
 mine_image: pygame.Surface
 solider_image: pygame.Surface
 night_solider_image: pygame.Surface
+flag_image: pygame.Surface
 
+font: pygame.Font
 
 def init_grass_locations() -> None:
     global grass_locations
@@ -22,7 +24,6 @@ def init_grass_locations() -> None:
 
 
 def init_images() -> None:
-
     # grass image
     global grass_image
     grass_image_size = ((consts.MINE_COLS * consts.CELL_SIZE),
@@ -47,13 +48,25 @@ def init_images() -> None:
     original_night_solider_image = pygame.image.load(consts.NIGHT_SOLIDER_IMG_PATH).convert_alpha()
     night_solider_image = pygame.transform.scale(original_night_solider_image, soldiers_image_size)
 
+    # flag image
+    global flag_image
+    flag_image_size = ((consts.FLAG_WIDTH * consts.CELL_SIZE), (consts.FLAG_HEIGHT * consts.CELL_SIZE))
+    original_flag_image = pygame.image.load(consts.FLAG_IMG_PATH)
+    flag_image = pygame.transform.scale(original_flag_image, flag_image_size)
 
-
+def init_fonts() -> None:
+    global font
+    font = pygame.font.SysFont(consts.FONT_NAME, consts.FONT_SIZE)
 
 def init_screen() -> None:
+    """
+
+    add more inits in this to be run when starting game
+    :return: None    :rtype: None
+    """
     init_grass_locations()
     init_images()
-    # add more screen inits in this to be run when starting game
+    init_fonts()
 
 
 def draw_xray_lines() -> None:
@@ -93,14 +106,26 @@ def draw_grass() -> None:
 
 
 def draw_flag() -> None:
-    # TODO draw flag
-    ...
+    flag_matrix_relative_position_top, flag_matrix_relative_position_left = game_field.flag_locations[0]
+    flag_top_matrix, flag_left_matrix = consts.BOARD_ROWS + flag_matrix_relative_position_top, consts.BOARD_COLS + flag_matrix_relative_position_left
+    flag_screen_x, flag_screen_y = flag_left_matrix * consts.CELL_SIZE, flag_top_matrix * consts.CELL_SIZE
+    screen.blit(flag_image, (flag_screen_x, flag_screen_y))
+
 
 def draw_mines() -> None:
     for mine_row, mine_col in game_field.mine_matrix_locations[::3]:
         mine_x_screen, mine_y_screen = mine_col * consts.CELL_SIZE, mine_row * consts.CELL_SIZE
         screen.blit(mine_image, (mine_x_screen, mine_y_screen))
 
+def draw_message(message: str, color: tuple[int, int, int], location: tuple[int, int]) -> None:
+    text_img = font.render(message, True, color)
+    screen.blit(text_img, location)
+
+def show_win_message():
+    draw_message(consts.WIN_MESSAGE, consts.WIN_MESSAGE_COLOR, consts.WIN_MESSAGE_LOCATION)
+
+def show_lose_message():
+    draw_message(consts.LOSE_MESSAGE, consts.LOSE_MESSAGE_COLOR, consts.LOSE_MESSAGE_LOCATION)
 
 def draw_game(game_state) -> None:
     draw_background(game_state["is_xray"])
@@ -111,6 +136,12 @@ def draw_game(game_state) -> None:
     else:
         draw_grass()
 
+    draw_flag()
     draw_soldier(game_state["is_xray"])
+
+    if game_state["state"] == consts.WIN_STATE:
+        show_win_message()
+    elif game_state["state"] == consts.LOSE_STATE:
+        show_lose_message()
 
     pygame.display.update()

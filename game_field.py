@@ -65,7 +65,7 @@ def create_flag():
     for row in range(-consts.FLAG_HEIGHT, 0):
         for col in range(-consts.FLAG_WIDTH, 0):
             field[row][col] = consts.FLAG
-            flag_locations.append(tuple([row, col]))
+            flag_locations.append((row, col))
 
 def remove_soldier():
     for row in range(len(field)):
@@ -73,7 +73,8 @@ def remove_soldier():
             if field[row][col] == consts.SOLDIER:
                 field[row][col] = consts.EMPTY_TILE
 
-def update_soldier():
+
+def update_solider():
     field[soldier.soldier_legs[0]][soldier.soldier_legs[1]] = consts.SOLDIER
     field[soldier.soldier_legs[0]][soldier.soldier_legs[2]] = consts.SOLDIER
     for item in soldier.soldier_body:
@@ -95,8 +96,7 @@ def check_soldier_flag():
                 return True
     return False
 
-
 if __name__ == '__main__':
     create_field()
     create_mines()
-    [print(row) for row in field]
+    create_flag()
