@@ -78,3 +78,7 @@ LOSE_STATE = -1
 WIN_STATE = 1
 
 END_GAME_TIMEOUT = 3
+
+# SAVING
+
+SAVING_FILES_PATH = "save_file_{key}.json"
