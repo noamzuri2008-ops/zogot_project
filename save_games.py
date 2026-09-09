@@ -2,17 +2,19 @@ import json
 import game_field
 import soldier
 import screen
+import consts
 
 data = {
-    "key": -1,
     "soldier leg": soldier.soldier_legs,
     "soldier body": soldier.soldier_body,
     "mines location": game_field.mine_matrix_locations,
-    "grass location": screen.init_grass_locations
+    "grass location": list()
 }
 
-def save_game(key, path):
-    data["key"] = key
+def save_game(save_file_index) -> None:
+    path = consts.SAVING_FILES_PATH.format(key=save_file_index)
+    update_data()
+    print(data)
     with open(path, "w") as f:
         json.dump(data, f)
 
@@ -20,10 +22,14 @@ def pull_game(path):
     with open(path, "r") as f:
         return json.load(f)
 
-def update_data(key,path):
-    for item in json.load(open(path)):
-        if item["key"] == key:
-            item.update(data)
+def update_data():
+    global data
+    data = {
+        "soldier leg": soldier.soldier_legs,
+        "soldier body": soldier.soldier_body,
+        "mines location": game_field.mine_matrix_locations,
+        "grass location": screen.grass_locations
+    }
 
 
 

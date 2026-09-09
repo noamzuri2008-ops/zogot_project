@@ -2,7 +2,6 @@ import time
 from typing import Any
 import pygame
 
-import save_games
 import soldier
 import consts
 import screen
@@ -84,13 +83,9 @@ def handle_user_events() -> None:
             if event.key == state["pressed_loading_saving_num"]:
                 save_load_num_key_index: int = pygame_number_keys.index(event.key)
                 if time.time() - state["timestamp_loading_saving_num_pressed"] > consts.NUM_OF_SECONDS_LOAD_NUM_PRESS:
-                    # TODO load game functions
-                    # save_games.load_game(save_load_num_key_index)
-                    ...
+                    load_game(save_load_num_key_index)
                 else:
-                    # TODO save game functions
-                    # save_games.save_game(save_load_num_key_index)
-                    ...
+                    save_games.save_game(save_load_num_key_index)
 
             game_field.remove_soldier()
             if event.key == pygame.K_UP:
