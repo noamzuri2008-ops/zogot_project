@@ -15,6 +15,7 @@ solider_image: pygame.Surface
 night_solider_image: pygame.Surface
 flag_image: pygame.Surface
 
+font: pygame.Font
 
 def init_grass_locations() -> None:
     global grass_locations
@@ -53,12 +54,19 @@ def init_images() -> None:
     original_flag_image = pygame.image.load(consts.FLAG_IMG_PATH)
     flag_image = pygame.transform.scale(original_flag_image, flag_image_size)
 
-
+def init_fonts() -> None:
+    global font
+    font = pygame.font.SysFont(consts.FONT_NAME, consts.FONT_SIZE)
 
 def init_screen() -> None:
+    """
+
+    add more inits in this to be run when starting game
+    :return: None    :rtype: None
+    """
     init_grass_locations()
     init_images()
-    # add more screen inits in this to be run when starting game
+    init_fonts()
 
 
 def draw_xray_lines() -> None:
@@ -109,6 +117,15 @@ def draw_mines() -> None:
         mine_x_screen, mine_y_screen = mine_col * consts.CELL_SIZE, mine_row * consts.CELL_SIZE
         screen.blit(mine_image, (mine_x_screen, mine_y_screen))
 
+def draw_message(message: str, color: tuple[int, int, int], location: tuple[int, int]) -> None:
+    text_img = font.render(message, True, color)
+    screen.blit(text_img, location)
+
+def show_win_message():
+    draw_message(consts.WIN_MESSAGE, consts.WIN_MESSAGE_COLOR, consts.WIN_MESSAGE_LOCATION)
+
+def show_lose_message():
+    draw_message(consts.LOSE_MESSAGE, consts.LOSE_MESSAGE_COLOR, consts.LOSE_MESSAGE_LOCATION)
 
 def draw_game(game_state) -> None:
     draw_background(game_state["is_xray"])
@@ -122,5 +139,9 @@ def draw_game(game_state) -> None:
     draw_flag()
     draw_soldier(game_state["is_xray"])
 
+    if game_state["state"] == consts.WIN_STATE:
+        show_win_message()
+    elif game_state["state"] == consts.LOSE_STATE:
+        show_lose_message()
 
     pygame.display.update()
