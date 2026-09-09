@@ -1,4 +1,6 @@
 import json
+import os
+
 import game_field
 import soldier
 import screen
@@ -14,11 +16,12 @@ data = {
 def save_game(save_file_index) -> None:
     path = consts.SAVING_FILES_PATH.format(key=save_file_index)
     update_data()
-    print(data)
     with open(path, "w") as f:
         json.dump(data, f)
 
 def pull_game(path):
+    if not os.path.exists(path):
+        return None
     with open(path, "r") as f:
         return json.load(f)
 

@@ -81,4 +81,4 @@ END_GAME_TIMEOUT = 3
 
 # SAVING
 NUM_OF_SECONDS_LOAD_NUM_PRESS = 1
-SAVING_FILES_PATH = "save_file_{key}.json"
+SAVING_FILES_PATH = "save_files/save_file_{key}.json"

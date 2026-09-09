@@ -7,7 +7,8 @@ mine_matrix_locations = []
 flag_locations = []
 
 def update_mines(mines):
-    mine_matrix_locations.copy(mines)
+    global mine_matrix_locations
+    mine_matrix_locations = mines.copy()
 
 
 def create_field():

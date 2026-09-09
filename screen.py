@@ -16,8 +16,10 @@ night_solider_image: pygame.Surface
 flag_image: pygame.Surface
 
 font: pygame.Font
+
 def update_grass_locations(grass_loc) -> None:
-    grass_locations = grass_loc
+    global grass_locations
+    grass_locations = grass_loc.copy()
 
 def init_grass_locations() -> None:
     global grass_locations

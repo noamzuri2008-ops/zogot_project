@@ -21,6 +21,7 @@ pygame_number_keys: list[int] = [
     pygame.K_9,
 ]
 
+
 def main() -> None:
     pygame.init()
     screen.init_screen()
@@ -44,7 +45,7 @@ def main() -> None:
         if state["state"] == consts.RUNNING_STATE:
             end_game_timeout = time.time()
         elif time.time() - end_game_timeout > consts.END_GAME_TIMEOUT:
-                break
+            break
 
         screen.draw_game(state)
 
@@ -57,7 +58,7 @@ def set_game_state() -> None:
         "is_xray": False,
         "xray_start_time": time.time(),
         "pressed_loading_saving_num": -1,
-        "time_loading_saving_num_pressed" : time.time()
+        "time_loading_saving_num_pressed": time.time()
 
     }
 
@@ -83,9 +84,9 @@ def handle_user_events() -> None:
             if event.key == state["pressed_loading_saving_num"]:
                 save_load_num_key_index: int = pygame_number_keys.index(event.key)
                 if time.time() - state["timestamp_loading_saving_num_pressed"] > consts.NUM_OF_SECONDS_LOAD_NUM_PRESS:
-                    load_game(save_load_num_key_index)
+                    load_game(save_load_num_key_index + 1)
                 else:
-                    save_games.save_game(save_load_num_key_index)
+                    save_games.save_game(save_load_num_key_index + 1)
 
             game_field.remove_soldier()
             if event.key == pygame.K_UP:
@@ -99,10 +100,13 @@ def handle_user_events() -> None:
 
             game_field.update_solider()
 
+
 def load_game(key: int):
     save_file_path: str = consts.SAVING_FILES_PATH.format(key=key)
     data = save_games.pull_game(save_file_path)
-    soldier.update(data["soldier leg"] ,data["soldier body"])
+    if not data:
+        return
+    soldier.update(data["soldier leg"], data["soldier body"])
     game_field.update_mines(data["mines location"])
     screen.update_grass_locations(data["grass location"])
 
